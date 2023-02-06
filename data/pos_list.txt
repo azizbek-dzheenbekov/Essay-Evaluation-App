@@ -1,0 +1,1 @@
+[('MD', 'VB'), ('NN', 'VBG'), ('PRP', 'PRP'), ('PRP', 'VBZ'), ('VBG', 'RP'), ('VBD', 'VBN'), ('IN', 'NNS'), ('IN', 'VBG'), ('MD', 'RB'), ('VBG', 'DT'), (',', 'PRP'), ('PRP$', 'NNS'), ('VBG', 'PRP$'), ('JJ', 'NNS'), ('WRB', 'VBG'), ('VBN', 'IN'), ('VBG', 'VBN'), (',', 'WDT'), ('RB', 'RB'), ('RB', 'VBN'), ('VBZ', 'PRP'), ('NN', 'NNS')]

@@ -1,0 +1,58 @@
+main:
+  modelHandler: LinearFeaturesHandler #  LinearEmbeddingsHandler or LinearFeaturesHandler 
+  preprocess: True # True or False 
+  train: True # True or False
+  load: False # True or False
+  save: True # True or False
+  predict: True # True or False
+
+files:
+  train_data: ${hydra:runtime.cwd}\data\train.csv
+  test_data: ${hydra:runtime.cwd}\data\test.csv
+
+  features_data: ${hydra:runtime.cwd}\data\features_data.csv
+  embeddings_data: ${hydra:runtime.cwd}\data\embeddings_data.csv
+  embeddings_data_test: ${hydra:runtime.cwd}\data\embeddings_data_test.csv
+
+  phrasal_verbs: ${hydra:runtime.cwd}\data\phrasal_verbs.txt
+  connectives: ${hydra:runtime.cwd}\data\connectives.txt
+  pos_list: ${hydra:runtime.cwd}\data\pos_list.txt
+  two_word_phrases: ${hydra:runtime.cwd}\data\two_word_phrases.txt
+  three_word_phrases: ${hydra:runtime.cwd}\data\three_word_phrases.txt
+  
+  features_predictions: ${hydra:runtime.cwd}\data\feature_predictions.csv
+  embeddings_predictions: ${hydra:runtime.cwd}\data\embeddings_predictions.csv
+
+feature_models:
+  ElasticNet_cohesion: {alpha: 0.005, l1_ratio: 0.0001} 
+  SVR_syntax: {C: 0.1, epsilon: 0.4, kernel: 'linear'} 
+  SVR_vocabulary: {C: 0.1, epsilon: 0.4, kernel: 'linear'}
+  SVR_phraseology: {C: 0.1, epsilon: 0.4, kernel: 'linear'}
+  SVR_grammar: {C: 0.4, epsilon: 0.3, kernel: 'linear'}
+  SVR_conventions: {C: 0.4, epsilon: 0.3, kernel: 'linear'}
+  use_gridsearch: False # True or False
+  ElasticNet_param_grid: {'alpha':[0.0001, 0.001, 0.005, 0.01, 0.1], 'l1_ratio': [0.00001, 0.0001, 0.001, 0.01, 0.1]}
+  SVR_param_grid: {'C': [0.01, 0.2, 0.4, 0.6, 1, 10], 'epsilon': [0.1, 0.2, 0.3, 0.4, 0.5]}
+  model_path: ${hydra:runtime.cwd}\models\
+
+embeddings_params:
+  MODEL_NAME: microsoft/deberta-v3-large  # or bert-base-cased
+  MAX_LEN: 1260   # 512 for bert-base-cased, any value for deBERTa
+  BATCH_SIZE: 4
+
+embeddings_models:
+  SVR_cohesion: {'C': 1, 'degree': 4, 'epsilon': 0.3, 'gamma': 1, 'kernel': 'poly'}
+  SVR_syntax: {'C': 1, 'degree': 3, 'epsilon': 0.1, 'gamma': 1, 'kernel': 'poly'} 
+  SVR_vocabulary: {'C': 1, 'degree': 4, 'epsilon': 0.2, 'gamma': 1, 'kernel': 'poly'}
+  SVR_phraseology: {'C': 1, 'degree': 5, 'epsilon': 0.3, 'gamma': 1, 'kernel': 'poly'}
+  SVR_grammar: {'C': 1, 'degree': 4, 'epsilon': 0.3, 'gamma': 1, 'kernel': 'poly'}
+  SVR_conventions: {'C': 1, 'degree': 5, 'epsilon': 0.2, 'gamma': 1, 'kernel': 'poly'}
+  use_gridsearch: False   # True or False
+  param_grid: 
+    { 'C': [0.1, 1, 10], 
+      'degree': [2, 3, 4, 5],
+      'gamma': [1, 0.1, 0.001],
+      'kernel': ['poly', 'linear'],
+      'epsilon': [0.1, 0.2, 0.3, 0.4]
+    }
+  model_path: ${hydra:runtime.cwd}\models\
